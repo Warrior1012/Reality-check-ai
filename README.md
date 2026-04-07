@@ -19,7 +19,7 @@ An AI-powered misinformation and bias detection tool. Paste any text — news ar
 | UI Components | shadcn/ui, Radix UI, Lucide React |
 | State / API | TanStack React Query, Wouter |
 | Backend | Node.js 24, Express 5, TypeScript |
-| AI | Google Gemini (`gemini-3-flash-preview`)  |
+| AI | Google Gemini (`gemini-3-flash-preview`) |
 | Validation | Zod, OpenAPI 3.1, Orval codegen |
 | Monorepo | pnpm workspaces |
 
