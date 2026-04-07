@@ -1,0 +1,155 @@
+openapi: 3.1.0
+info:
+  # Do not change the title, if the title changes, the import paths will be broken
+  title: Api
+  version: 0.1.0
+  description: API specification
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: analyze
+    description: Content analysis operations
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      description: Returns server health status
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+  /analyze:
+    post:
+      operationId: analyzeContent
+      tags: [analyze]
+      summary: Analyze content for misinformation and bias
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AnalyzeContentBody"
+      responses:
+        "200":
+          description: Analysis result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalysisResult"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+    AnalyzeContentBody:
+      type: object
+      properties:
+        content:
+          type: string
+          description: The text content to analyze
+      required:
+        - content
+    Claim:
+      type: object
+      properties:
+        claim:
+          type: string
+        verdict:
+          type: string
+          enum: ["true", "false", "unverified", "misleading"]
+        reason:
+          type: string
+      required:
+        - claim
+        - verdict
+        - reason
+    ManipulationDetail:
+      type: object
+      properties:
+        type:
+          type: string
+        examples:
+          type: array
+          items:
+            type: string
+        severity:
+          type: string
+          enum: [low, medium, high]
+      required:
+        - type
+        - examples
+        - severity
+    AnalysisResult:
+      type: object
+      properties:
+        truthScore:
+          type: integer
+          description: Truth score from 0 to 100
+        truthLabel:
+          type: string
+          enum: [trustworthy, suspicious, likely-false]
+        bias:
+          type: string
+          description: Detected bias type or "none"
+        biasExplanation:
+          type: string
+        manipulationLevel:
+          type: string
+          enum: [none, low, medium, high]
+        manipulationDetails:
+          type: array
+          items:
+            $ref: "#/components/schemas/ManipulationDetail"
+        claims:
+          type: array
+          items:
+            $ref: "#/components/schemas/Claim"
+        simpleSummary:
+          type: string
+          description: Plain language explanation of findings
+        highlightedWords:
+          type: array
+          description: Words flagged for manipulation
+          items:
+            type: string
+      required:
+        - truthScore
+        - truthLabel
+        - bias
+        - biasExplanation
+        - manipulationLevel
+        - manipulationDetails
+        - claims
+        - simpleSummary
+        - highlightedWords
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
