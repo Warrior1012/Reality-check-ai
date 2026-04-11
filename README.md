@@ -47,7 +47,7 @@ An AI-powered misinformation and bias detection tool. Paste any text — news ar
 
 - Node.js 24+
 - pnpm 10+
-- Gemini AI Integration (auto-provisioned on Replit)
+- Gemini AI Integration 
 
 ### Install
 
