@@ -1,53 +1,71 @@
 # Reality Check AI
 
-An AI-powered misinformation and bias detection tool. Paste any text — news article, WhatsApp forward, tweet, or reel caption — and get a forensic-level breakdown of its truthfulness, bias, and manipulation tactics.
+An AI-powered misinformation and bias detection tool. Analyze text **and images** (news articles, WhatsApp forwards, tweets, or screenshots) and get a deep breakdown of credibility, bias, and manipulation tactics.
 
-## Features
+---
 
-- **Truth Score** — 0 to 100% credibility rating with a color-coded gauge
-- **Bias Detection** — identifies political, brand, or agenda-driven bias
-- **Emotional Manipulation Detector** — flags fear words, false urgency, anger triggers
-- **Claim-by-Claim Breakdown** — extracts every factual claim and verdicts each one
-- **Flagged Keywords** — highlights the exact manipulative phrases used
-- **Plain English Summary** — explains findings in simple terms
+## 🚀 Features
 
-## Tech Stack
+* **Truth Score** — 0 to 100% credibility rating with a visual indicator
+* **Bias Detection** — identifies political, brand, or agenda-driven bias
+* **Emotional Manipulation Detector** — flags fear tactics, urgency triggers, and misleading tone
+* **Claim-by-Claim Breakdown** — extracts factual claims and verifies each one
+* **Flagged Keywords** — highlights manipulative or misleading phrases
+* **Plain English Summary** — simplified explanation of results
 
-| Layer | Technology |
-|---|---|
-| Frontend | React 19, Vite, TypeScript, Tailwind CSS v4 |
-| UI Components | shadcn/ui, Radix UI, Lucide React |
-| State / API | TanStack React Query, Wouter |
-| Backend | Node.js 24, Express 5, TypeScript |
-| AI | Google Gemini (`gemini-3-flash-preview`) |
-| Validation | Zod, OpenAPI 3.1, Orval codegen |
-| Monorepo | pnpm workspaces |
+### 🖼️ Image Analysis (NEW)
 
-## Project Structure
+* Upload images or screenshots (e.g., WhatsApp forwards, news posts)
+* Extracts text using OCR
+* Runs the same misinformation and bias detection pipeline on extracted content
+
+---
+
+## 🧠 Tech Stack
+
+| Layer         | Technology                                  |
+| ------------- | ------------------------------------------- |
+| Frontend      | React 19, Vite, TypeScript, Tailwind CSS v4 |
+| UI Components | shadcn/ui, Radix UI, Lucide React           |
+| State / API   | TanStack React Query, Wouter                |
+| Backend       | Node.js 24, Express 5, TypeScript           |
+| AI            | Google Gemini (`gemini-3-flash-preview`)    |
+| Database      | PostgreSQL (Drizzle ORM)                    |
+| Validation    | Zod, OpenAPI 3.1, Orval                     |
+| Monorepo      | pnpm workspaces                             |
+
+---
+
+## 🗂️ Project Structure
 
 ```
 ├── artifacts/
-│   ├── api-server/        # Express 5 backend
+│   ├── api-server/        # Backend (Express API)
 │   │   └── src/routes/
-│   │       └── analyze.ts # POST /api/analyze — Gemini AI route
-│   └── reality-check/     # React + Vite frontend
+│   │       └── analyze.ts
+│   └── reality-check/     # Frontend (React app)
 │       └── src/pages/
-│           └── home.tsx   # Main analyzer UI
+│           └── home.tsx
 ├── lib/
-│   ├── api-spec/          # OpenAPI contract (source of truth)
-│   ├── api-client-react/  # Generated React Query hooks
-│   ├── api-zod/           # Generated Zod validation schemas
-│   ├── db/                # Drizzle ORM + PostgreSQL schema
-│   └── integrations-gemini-ai/  # Gemini AI client
+│   ├── api-spec/
+│   ├── api-client-react/
+│   ├── api-zod/
+│   ├── db/                # Database schema & ORM (Drizzle + PostgreSQL)
+│   └── integrations-gemini-ai/
 ```
 
-## Getting Started
+---
+
+## ⚙️ Getting Started
 
 ### Prerequisites
 
-- Node.js 24+
-- pnpm 10+
-- Gemini AI Integration 
+* Node.js 24+
+* pnpm 10+
+* PostgreSQL database
+* Gemini API access
+
+---
 
 ### Install
 
@@ -55,27 +73,19 @@ An AI-powered misinformation and bias detection tool. Paste any text — news ar
 pnpm install
 ```
 
-### Run codegen (after any OpenAPI spec change)
-
-```bash
-pnpm --filter @workspace/api-spec run codegen
-```
+---
 
 ### Development
 
 ```bash
-# Start API server
+# Start backend
 pnpm --filter @workspace/api-server run dev
 
 # Start frontend
 pnpm --filter @workspace/reality-check run dev
 ```
 
-### Typecheck
-
-```bash
-pnpm run typecheck
-```
+---
 
 ### Build
 
@@ -84,55 +94,55 @@ pnpm --filter @workspace/api-server run build
 pnpm --filter @workspace/reality-check run build
 ```
 
-## API Reference
+---
+
+## 📡 API Reference
 
 ### `POST /api/analyze`
 
-Analyzes text content for misinformation and bias.
+Analyzes text (or extracted text from images) for misinformation and bias.
 
-**Request body:**
+#### Request
+
 ```json
 {
-  "content": "Text to analyze (max 10,000 characters)"
+  "content": "Text to analyze"
 }
 ```
 
-**Response:**
+#### Response
+
 ```json
 {
   "truthScore": 12,
   "truthLabel": "likely-false",
   "bias": "fear-mongering",
-  "biasExplanation": "Uses alarmist language without citing official sources.",
   "manipulationLevel": "high",
-  "manipulationDetails": [
-    {
-      "type": "False urgency",
-      "examples": ["Kal se internet band"],
-      "severity": "high"
-    }
-  ],
-  "claims": [
-    {
-      "claim": "Internet will be shut down across India.",
-      "verdict": "false",
-      "reason": "No official notification or credible source confirms this."
-    }
-  ],
-  "simpleSummary": "This message is fake and designed to cause panic.",
-  "highlightedWords": ["emergency", "internet band", "sarkar ne kaha"]
+  "claims": [],
+  "simpleSummary": "This content is misleading."
 }
 ```
 
-## Environment Variables
+---
 
-| Variable | Description |
-|---|---|
-| `AI_INTEGRATIONS_GEMINI_BASE_URL` | Gemini proxy URL  |
-| `AI_INTEGRATIONS_GEMINI_API_KEY` | Gemini API key  |
-| `DATABASE_URL` | PostgreSQL connection string |
-| `PORT` | Server port (auto-set) |
+## 🗄️ Database Integration
 
-## License
+* Stores analysis results for future reference
+* Enables history tracking and re-analysis
+* Built using **PostgreSQL + Drizzle ORM**
+
+---
+
+## 🔐 Environment Variables
+
+| Variable                         | Description                  |
+| -------------------------------- | ---------------------------- |
+| `AI_INTEGRATIONS_GEMINI_API_KEY` | Gemini API key               |
+| `DATABASE_URL`                   | PostgreSQL connection string |
+| `PORT`                           | Server port                  |
+
+---
+
+## 📜 License
 
 MIT
