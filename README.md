@@ -128,8 +128,8 @@ Analyzes text content for misinformation and bias.
 
 | Variable | Description |
 |---|---|
-| `AI_INTEGRATIONS_GEMINI_BASE_URL` | Gemini proxy URL (auto-set by Replit) |
-| `AI_INTEGRATIONS_GEMINI_API_KEY` | Gemini API key (auto-set by Replit) |
+| `AI_INTEGRATIONS_GEMINI_BASE_URL` | Gemini proxy URL  |
+| `AI_INTEGRATIONS_GEMINI_API_KEY` | Gemini API key  |
 | `DATABASE_URL` | PostgreSQL connection string |
 | `PORT` | Server port (auto-set) |
 
