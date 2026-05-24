@@ -142,7 +142,10 @@ Analyzes text (or extracted text from images) for misinformation and bias.
 | `PORT`                           | Server port                  |
 
 ---
+## 🚀 Live Demo
+[reality-check-os.replit.app](https://reality-check-os.replit.app)
 
+---
 ## 📜 License
 
 MIT
