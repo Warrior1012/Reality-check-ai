@@ -1,15 +1,15 @@
 # Reality Check AI
 
-An AI-powered misinformation and bias detection tool. Analyze text **and images** (news articles, WhatsApp forwards, tweets, or screenshots) and get a deep breakdown of credibility, bias, and manipulation tactics.
+An AI-assisted media-literacy prototype for reviewing text and image-derived content. It returns a structured Gemini assessment of claims, possible bias, and manipulative language. Its output is a starting point for human review, not authoritative fact verification.
 
 ---
 
 ## 🚀 Features
 
-* **Truth Score** — 0 to 100% credibility rating with a visual indicator
+* **AI Assessment Score** — a 0–100 model-generated heuristic for review, not a calibrated probability that content is true
 * **Bias Detection** — identifies political, brand, or agenda-driven bias
 * **Emotional Manipulation Detector** — flags fear tactics, urgency triggers, and misleading tone
-* **Claim-by-Claim Breakdown** — extracts factual claims and verifies each one
+* **Claim-by-Claim Breakdown** — extracts claims and generates model-based verdicts; the current pipeline does not independently verify them against external sources
 * **Flagged Keywords** — highlights manipulative or misleading phrases
 * **Plain English Summary** — simplified explanation of results
 
